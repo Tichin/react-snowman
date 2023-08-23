@@ -19,6 +19,8 @@ it('image remains after max wrongs', function () {
       words={["apple"]}
       maxWrong={6} />);
 
+
+  // 7 wrong guessed
   fireEvent.click(container.querySelector('button[value="s"]'));
   fireEvent.click(container.querySelector('button[value="r"]'));
   fireEvent.click(container.querySelector('button[value="y"]'));
