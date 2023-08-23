@@ -10,8 +10,29 @@ import img4 from "./4.png";
 import img5 from "./5.png";
 import img6 from "./6.png";
 
+function findLetterButton(container, letter) {
+  return container.querySelector(`button[value="${letter}"]`);
+}
 
-it('image remains after max wrongs', function () {
+it('renders without crashing', function () {
+  const { container } = render(
+    <Snowman
+      images={[img0, img1, img2, img3, img4, img5, img6]}
+      words={["apple"]}
+      maxWrong={6} />);
+});
+
+it('matches snapshot', function () {
+  const { container } = render(
+    <Snowman
+      images={[img0, img1, img2, img3, img4, img5, img6]}
+      words={["apple"]}
+      maxWrong={6} />);
+  expect(container).toMatchSnapshot();
+});
+
+it('image remains after max wrong guesses exceeded', function () {
+  //can't exceed maxWrong anymore??
 
   const { container } = render(
     <Snowman
@@ -19,21 +40,20 @@ it('image remains after max wrongs', function () {
       words={["apple"]}
       maxWrong={6} />);
 
+  // 7 wrong guesses
+  fireEvent.click(findLetterButton(container, "s"));
+  fireEvent.click(findLetterButton(container, "r"));
+  fireEvent.click(findLetterButton(container, "c"));
+  fireEvent.click(findLetterButton(container, "v"));
+  fireEvent.click(findLetterButton(container, "t"));
+  fireEvent.click(findLetterButton(container, "q"));
+  // fireEvent.click(findLetterButton(container, "o"));
 
-  // 7 wrong guessed
-  fireEvent.click(container.querySelector('button[value="s"]'));
-  fireEvent.click(container.querySelector('button[value="r"]'));
-  fireEvent.click(container.querySelector('button[value="y"]'));
-  fireEvent.click(container.querySelector('button[value="k"]'));
-  fireEvent.click(container.querySelector('button[value="u"]'));
-  fireEvent.click(container.querySelector('button[value="v"]'));
-  fireEvent.click(container.querySelector('button[value="b"]'));
-
-
-  const img = container.querySelector('img');
-
-  // expect(img.getAttribute('src')).toContain("./6.png");
-  expect(img.getAttribute('alt')).toEqual("6");
-
-
+  expect(container).toContainHTML("6.png");
+  //TODO: more assertions
+  //is there a better way?
 });
+
+// const img = container.querySelector('img');
+// expect(img.getAttribute('alt')).toEqual("6");
+//TODO: more secure
