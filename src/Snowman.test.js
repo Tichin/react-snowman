@@ -25,6 +25,8 @@ it('image remains after max wrongs', function () {
   fireEvent.click(container.querySelector('button[value="k"]'));
   fireEvent.click(container.querySelector('button[value="u"]'));
   fireEvent.click(container.querySelector('button[value="v"]'));
+  fireEvent.click(container.querySelector('button[value="b"]'));
+
 
   const img = container.querySelector('img');
 
